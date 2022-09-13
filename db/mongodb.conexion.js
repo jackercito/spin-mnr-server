@@ -11,7 +11,6 @@ const uri = "mongodb+srv://" + USER + ":" + PASSWORD + "@" + DB
 //Conexion a la base de datos
 mongoose.Promise = global.Promise;
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true }, (err, db) => {
-    console.log(uri);
     if (err) console.log(err);
 });
 
