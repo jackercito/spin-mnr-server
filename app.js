@@ -39,7 +39,6 @@ const jwtCheck = jwt({
 
 app.set('view engine', 'html');
 
-app.use(forceSSL);
 app.use(cors(corsOptions));
 app.use(helmet.hidePoweredBy());
 app.use(logger('dev'));
