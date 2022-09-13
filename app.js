@@ -16,7 +16,7 @@ const experimento = require('./routes/experimento.routes');
 
 let origen;
 if (process.env.ENVIROMENT == 'PROD')
-    origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app']
+    origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app', 'https://localhost:4200']
 else
     origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app', 'https://localhost:4200', 'https://localhost:3000']
 
