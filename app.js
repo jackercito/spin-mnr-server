@@ -20,7 +20,7 @@ else
     origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app', 'https://localhost:4200', 'https://localhost:3000']
 
 const corsOptions = {
-    origin: origen,
+    origin: '*',
     optionsSuccessStatus: 200
 }
 
