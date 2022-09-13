@@ -21,7 +21,7 @@ else
     origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app', 'https://localhost:4200', 'https://localhost:3000']
 
 const corsOptions = {
-    origin: '*',
+    origin: origen,
     optionsSuccessStatus: 200
 }
 
@@ -55,15 +55,6 @@ app.use(function (err, _req, _res, next) {
     err2.status = 404;
     next(err2);
 });
-
-app.get("/info", (res) => {
-    const info = {
-        autor: "Pablo Alonso",
-        fecha: new Date(),
-        version: 3
-    }
-    res.json(info);
-})
 
 app.set('port', port);
 app.listen(port, () => { });
