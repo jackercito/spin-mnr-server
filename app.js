@@ -5,28 +5,24 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
-const jwtAuthz = require('express-jwt-authz');
 const helmet = require('helmet');
+const cors = require('cors');
 
 require('dotenv').config()
 var app = express();
 
 const experimento = require('./routes/experimento.routes');
 
-const forceSSL = function () {
-    return function (req, res, next) {
-        if (req.headers['x-forwarded-proto'] !== 'https') {
-            console.log(['https://', req.get('Host'), req.url].join(''));
-            return res.redirect(
-                ['https://', req.get('Host'), req.url].join('')
-            );
-        }
-        next();
-    }
-}
+let origen;
+if (process.env.ENVIROMENT == 'PROD')
+    origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app']
+else
+    origen = ['https://spin-server-mnr.onrender.com', 'https://spin-mnr.vercel.app', 'https://localhost:4200', 'https://localhost:3000']
 
-if (process.env.ENVIROMENT != 'DEV')
-    app.use(forceSSL());
+const corsOptions = {
+    origin: origen,
+    optionsSuccessStatus: 200
+}
 
 const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
@@ -40,6 +36,7 @@ const jwtCheck = jwt({
     algorithms: ['RS256']
 });
 
+app.use(cors(corsOptions));
 app.use(helmet.hidePoweredBy());
 app.use(logger('dev'));
 app.use(express.json());
@@ -55,14 +52,11 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.use(function (err, _req, _res, next) {
+    let err2 = new Error('Not Found: ' + err);
+    console.log("Err -> " + err2);
+    err2.status = 404;
+    next(err2);
 });
 
 module.exports = app;
