@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha \"test/**/*.spec.js\" --exit --timeout 10000",
+    "nyc": "nyc --reporter=lcov --reporter=text npm run test"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -11,6 +13,21 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "mongoose": "6.6.0",
+    "dotenv": "16.0.2",
+    "express-jwt": "7.7.5",
+    "express-jwt-authz": "2.4.1",
+    "jwks-rsa": "2.1.4",
+    "helmet": "6.0.0"
+  },
+  "devDependencies": {
+    "chai": "4.3.6",
+    "chai-as-promised": "7.1.1",
+    "chai-http": "4.3.0",
+    "chai-json": "1.0.0",
+    "jshint": "2.13.5",
+    "mocha": "10.0.0",
+    "nyc": "15.1.0"
   }
 }

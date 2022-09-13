@@ -1,4 +1,4 @@
-var mongoose = require("../bd/mongodb.conexion").mongoose;
+var mongoose = require("../db/mongodb.conexion").mongoose;
 var Schema = mongoose.Schema;
 
 var ExperimentoSchema = new Schema({

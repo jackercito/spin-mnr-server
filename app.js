@@ -3,7 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { expressjwt: jwt } = require('express-jwt');
+const jwks = require('jwks-rsa');
+const jwtAuthz = require('express-jwt-authz');
+const helmet = require('helmet');
 
+require('dotenv').config()
 var app = express();
 
 const experimento = require('./routes/experimento.routes');
@@ -35,6 +40,7 @@ const jwtCheck = jwt({
     algorithms: ['RS256']
 });
 
+app.use(helmet.hidePoweredBy());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
