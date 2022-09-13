@@ -16,11 +16,20 @@ const fs = require('fs');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+let server;
 
-var server = http.createServer(app);
+if(process.env.ENVIRONMENT != 'PROD'){
+	const options = {
+	  key: fs.readFileSync('../ssl/aplicacionPacisa.key'),
+	  cert: fs.readFileSync('../ssl/aplicacionPacisa.crt')
+	};
+
+	server = http.createServer(options, app);
+}else {
+	server = http.createServer(app);
+}
+
+
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -9,7 +9,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 require('dotenv').config()
-var app = express();
+const app = express();
+const port = process.env.PORT || 3000;
 
 const experimento = require('./routes/experimento.routes');
 
@@ -36,6 +37,9 @@ const jwtCheck = jwt({
     algorithms: ['RS256']
 });
 
+app.set('view engine', 'html');
+
+app.use(forceSSL);
 app.use(cors(corsOptions));
 app.use(helmet.hidePoweredBy());
 app.use(logger('dev'));
@@ -53,4 +57,5 @@ app.use(function (err, _req, _res, next) {
     next(err2);
 });
 
-module.exports = app;
+app.set('port', port);
+app.listen(port, () => { });
