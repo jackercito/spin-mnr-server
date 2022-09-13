@@ -46,12 +46,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/experimento', jwtCheck, experimento);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
 app.use(function (err, _req, _res, next) {
     let err2 = new Error('Not Found: ' + err);
     console.log("Err -> " + err2);

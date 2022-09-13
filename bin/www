@@ -16,11 +16,6 @@ const fs = require('fs');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/*const options = {
-  key: fs.readFileSync('../ssl/aplicacionPacisa.key'),
-  cert: fs.readFileSync('../ssl/aplicacionPacisa.crt')
-};*/
-
 /**
  * Create HTTP server.
  */
