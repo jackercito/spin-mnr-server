@@ -56,5 +56,14 @@ app.use(function (err, _req, _res, next) {
     next(err2);
 });
 
+app.get("/info", (res) => {
+    const info = {
+        autor: "Pablo Alonso",
+        fecha: new Date(),
+        version: 3
+    }
+    res.json(info);
+})
+
 app.set('port', port);
 app.listen(port, () => { });
