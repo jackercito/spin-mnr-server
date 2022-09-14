@@ -1,7 +1,7 @@
-var mongoose = require("../db/mongodb.conexion").mongoose;
-var Schema = mongoose.Schema;
+import { conexion } from '../db/mongodb.conexion';
+import { Schema } from 'mongoose';
 
-var ExperimentoSchema = new Schema({
+const experimentoSchema = new Schema({
 	espectrometro: { type: String },
 	fecha_entrada: { type: Date, required: true },
 	fecha_salida: { type: Date },
@@ -15,4 +15,4 @@ var ExperimentoSchema = new Schema({
 	visible: { type: Boolean }
 });
 
-module.exports = mongoose.model("Experimento", ExperimentoSchema);
+export const Experimento = conexion.model("Experimento", experimentoSchema);

@@ -1,8 +1,7 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
 const helmet = require('helmet');
@@ -12,7 +11,7 @@ require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 3000;
 
-const experimento = require('./routes/experimento.routes');
+import { experimentoRoute } from './routes/experimento.routes';
 
 let origen;
 if (process.env.ENVIROMENT == 'PROD')
@@ -47,14 +46,29 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/experimento', jwtCheck, experimento);
+app.use('/experimento', jwtCheck, experimentoRoute);
 
-app.use(function (err, _req, _res, next) {
-    let err2 = new Error('Not Found: ' + err);
+app.use((err: any, _req: any, _res: any, next: any) => {
+    const err2: Error = new Error('Error: ' + err);
     console.log("Err -> " + err2);
-    err2.status = 404;
+    //err2.status = 404;
     next(err2);
 });
 
 app.set('port', port);
-app.listen(port, () => { });
+
+if (process.env.ENVIROMENT == 'PROD') {
+    app.listen(port, () => { });
+} else {
+    const https = require('https');
+    const fs = require('fs');
+
+    const options = {
+        key: fs.readFileSync('./ssl/aplicacionPacisa.key'),
+        cert: fs.readFileSync('./ssl/aplicacionPacisa.crt')
+    };
+
+    https.createServer(options, app).listen(port);
+}
+
+
